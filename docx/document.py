@@ -8,20 +8,22 @@ from __future__ import (
     absolute_import, division, print_function, unicode_literals
 )
 
-from .blkcntnr import BlockItemContainer
-from .enum.section import WD_SECTION
-from .enum.text import WD_BREAK
-from .section import Section, Sections
-from .shared import ElementProxy, Emu
+from docx.blkcntnr import BlockItemContainer
+from docx.bookmark import Bookmarks
+from docx.enum.section import WD_SECTION
+from docx.enum.text import WD_BREAK
+from docx.section import Section, Sections
+from docx.shared import ElementProxy, Emu, lazyproperty
 
 
 class Document(ElementProxy):
-    """
-    WordprocessingML (WML) document. Not intended to be constructed directly.
-    Use :func:`docx.Document` to open or create a document.
+    """WordprocessingML (WML) document.
+
+    Not intended to be constructed directly. Use :func:`docx.Document` to
+    open or create a document.
     """
 
-    __slots__ = ('_part', '__body')
+    __slots__ = ('__body', '_bookmarks', '_part')
 
     def __init__(self, element, part):
         super(Document, self).__init__(element)
@@ -99,6 +101,16 @@ class Document(ElementProxy):
         table = self._body.add_table(rows, cols, self._block_width)
         table.style = style
         return table
+
+    @lazyproperty
+    def bookmarks(self):
+        """|Bookmarks| object providing access to |Bookmark| objects.
+
+        A bookmark may exist in the main document story, but also in headers,
+        footers, footnotes or endnotes. This collection contains all
+        bookmarks defined in any of these parts.
+        """
+        return Bookmarks(self._part)
 
     @property
     def core_properties(self):
