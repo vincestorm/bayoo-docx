@@ -13,7 +13,7 @@ from .oxml import CT_Relationships
 
 class Relationships(dict):
     """
-    Collection object for |_Relationship| instances, having list semantics.
+    Collection object for |_Relationship| instances, having dict semantics.
     """
     def __init__(self, baseURI):
         super(Relationships, self).__init__()
