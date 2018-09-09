@@ -83,6 +83,15 @@ class DocumentPart(XmlPart):
         """
         return InlineShapes(self._element.body, self)
 
+    def iter_story_parts(self):
+        """Generate all parts in document that contain a story.
+
+        A story is a sequence of block-level items (paragraphs and tables).
+        Story parts include this main document part, headers, footers,
+        footnotes, and endnotes.
+        """
+        raise NotImplementedError
+
     def new_pic_inline(self, image_descriptor, width, height):
         """
         Return a newly-created `w:inline` element containing the image
