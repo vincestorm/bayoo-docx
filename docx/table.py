@@ -12,10 +12,12 @@ from .oxml.simpletypes import ST_Merge
 from .shared import Inches, lazyproperty, Parented
 from .section import Section
 
+
 class Table(Parented):
     """
     Proxy class for a WordprocessingML ``<w:tbl>`` element.
     """
+
     def __init__(self, tbl, parent):
         super(Table, self).__init__(parent)
         self._element = self._tbl = tbl
@@ -47,6 +49,7 @@ class Table(Parented):
     @property
     def section(self):
         return Section(self._element._section, self.part)
+
     @property
     def alignment(self):
         """
@@ -245,6 +248,14 @@ class _Cell(BlockItemContainer):
         return super(_Cell, self).paragraphs
 
     @property
+    def comments(self):
+        comments = []
+        for paragraph in self.paragraphs:
+            comments += paragraph.comments
+
+        return comments
+
+    @property
     def tables(self):
         """
         List of tables in the cell, in the order they appear. Read-only.
@@ -306,6 +317,7 @@ class _Column(Parented):
     """
     Table column
     """
+
     def __init__(self, gridCol, parent):
         super(_Column, self).__init__(parent)
         self._gridCol = gridCol
@@ -349,6 +361,7 @@ class _Columns(Parented):
     Sequence of |_Column| instances corresponding to the columns in a table.
     Supports ``len()``, iteration and indexed access.
     """
+
     def __init__(self, tbl, parent):
         super(_Columns, self).__init__(parent)
         self._tbl = tbl
@@ -392,9 +405,18 @@ class _Row(Parented):
     """
     Table row
     """
+
     def __init__(self, tr, parent):
         super(_Row, self).__init__(parent)
         self._tr = self._element = tr
+
+    @property
+    def text_as_lst(self):
+        return [cell.text for cell in self.cells]
+
+    @property
+    def text(self):
+        return ' '.join(self.text_as_lst)
 
     @property
     def cells(self):
@@ -448,6 +470,7 @@ class _Rows(Parented):
     Sequence of |_Row| objects corresponding to the rows in a table.
     Supports ``len()``, iteration, indexed access, and slicing.
     """
+
     def __init__(self, tbl, parent):
         super(_Rows, self).__init__(parent)
         self._tbl = tbl
