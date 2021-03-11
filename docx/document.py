@@ -12,6 +12,7 @@ from docx.enum.text import WD_BREAK
 from docx.section import Section, Sections
 from docx.shared import ElementProxy, Emu
 
+from docx.text.footnote import Footnote
 
 class Document(ElementProxy):
     """WordprocessingML (WML) document.
@@ -129,6 +130,12 @@ class Document(ElementProxy):
         glyph, being flowed like other text in a paragraph.
         """
         return self._part.inline_shapes
+
+    @property
+    def footnotes(self):
+        fn_part = self.part._footnotes_part._element
+        fn_lst = fn_part.getchildren()
+        return [Footnote(fn, fn_part) for fn in fn_lst]
 
     @property
     def paragraphs(self):
