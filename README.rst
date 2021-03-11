@@ -36,7 +36,13 @@ Usage
 
     run_comments = run.comments
 
-    paragraph.add_footnote('footnote text') # add a footnote
+    paragraph1.add_footnote('footnote text') # add a footnote
+
+    paragraph2.add_footnote('footnote text') # add a footnote
+
+    fn_lst = document.footnotes # list of footnotes in the document
+    
+    fn_text = [fn.text for fn in fn_lst]
 
 
 Donation
