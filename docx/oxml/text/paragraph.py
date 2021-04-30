@@ -60,10 +60,25 @@ class CT_P(BaseOxmlElement):
         
         return footnote
 
+    def add_en(self, text, endnotes_part):
+        endnote = endnotes_part.add_endnote()
+        endnote._add_p(' ' + text)
+        _r = self.add_r()
+        _r.add_endnote_reference(endnote._id)
+
+        return endnote
+
     def footnote_style(self):
         pPr = self.get_or_add_pPr()
         rstyle = pPr.get_or_add_pStyle()
         rstyle.val = 'FootnoteText'
+
+        return self
+
+    def endnote_style(self):
+        pPr = self.get_or_add_pPr()
+        rstyle = pPr.get_or_add_pStyle()
+        rstyle.val = 'EndnoteText'
 
         return self
 
@@ -126,9 +141,16 @@ class CT_P(BaseOxmlElement):
         if  len(_id) == 0 :
             return None
         else:
-            return _id 
+            return _id
 
-        
+    @property
+    def endnote_ids(self):
+        _id = self.xpath('./w:r/w:endnoteReference/@w:id')
+        if len(_id) == 0:
+            return None
+        else:
+            return _id
+
     @style.setter
     def style(self, style):
         pPr = self.get_or_add_pPr()

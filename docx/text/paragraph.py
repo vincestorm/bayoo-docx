@@ -63,6 +63,12 @@ class Paragraph(Parented):
 
         return footnote
 
+    def add_endnote(self, text):
+        endnotes_part = self.part._endnotes_part.element
+        endnote = self._p.add_en(text, endnotes_part)
+
+        return endnote
+
     def merge_paragraph(self, otherParagraph):
         r_lst = otherParagraph.runs
         self.append_runs(r_lst)
@@ -223,6 +229,13 @@ class Paragraph(Parented):
     @property
     def footnotes(self):
         if self._p.footnote_ids is not None :
+            return True
+        else :
+            return False
+
+    @property
+    def endnotes(self):
+        if self._p.endnote_ids is not None :
             return True
         else :
             return False

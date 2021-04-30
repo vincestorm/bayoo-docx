@@ -271,8 +271,14 @@ register_element_cls('w:commentReference', CT_CRef)
 
 
 from .footnotes import CT_Footnotes, CT_Footnote, CT_FNR, CT_FootnoteRef
+from .endnotes import CT_Endnotes, CT_Endnote, CT_ENR, CT_EndnoteRef
 
 register_element_cls('w:footnotes', CT_Footnotes)
 register_element_cls('w:footnote', CT_Footnote)
 register_element_cls('w:footnoteReference', CT_FNR)
 register_element_cls('w:footnoteRef', CT_FootnoteRef)
+
+register_element_cls('w:endnotes', CT_Endnotes)
+register_element_cls('w:endnote', CT_Endnote)
+register_element_cls('w:endnoteReference', CT_ENR)
+register_element_cls('w:endnoteRef', CT_EndnoteRef)

@@ -90,9 +90,24 @@ class CT_R(BaseOxmlElement):
         reference._id = _id
         self.append(reference)
         return reference
+
+    def add_endnote_reference(self, _id):
+        rPr = self.get_or_add_rPr()
+        rstyle = rPr.get_or_add_rStyle()
+        rstyle.val = 'EndnoteReference'
+        reference = OxmlElement('w:endnoteReference')
+        reference._id = _id
+        self.append(reference)
+        return reference
     
     def add_footnoteRef(self):
         ref = OxmlElement('w:footnoteRef')
+        self.append(ref)
+
+        return ref
+
+    def add_endnoteRef(self):
+        ref = OxmlElement('w:endnoteRef')
         self.append(ref)
 
         return ref
@@ -104,14 +119,30 @@ class CT_R(BaseOxmlElement):
 
         self.add_footnoteRef()
         return self
-    
+
+    def endnote_style(self):
+        rPr = self.get_or_add_rPr()
+        rstyle = rPr.get_or_add_rStyle()
+        rstyle.val = 'EndnoteReference'
+
+        self.add_footnoteRef()
+        return self
+
     @property
     def footnote_id(self):
         _id = self.xpath('./w:footnoteReference/@w:id')
         if len(_id) > 1 or len(_id) == 0 :
             return None
         else:
-            return int(_id[0]) 
+            return int(_id[0])
+
+    @property
+    def endnote_id(self):
+        _id = self.xpath('./w:endnoteReference/@w:id')
+        if len(_id) > 1 or len(_id) == 0:
+            return None
+        else:
+            return int(_id[0])
 
     def clear_content(self):
         """

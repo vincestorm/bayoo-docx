@@ -204,6 +204,17 @@ class Run(Parented):
             return None
 
     @property
+    def endnote(self):
+        _id = self._r.endnote_id
+
+        if _id is not None:
+            endnotes_part = self._parent._parent.part._endnotes_part.element
+            endnote = endnotes_part.get_endnote_by_id(_id)
+            return endnote.paragraph.text
+        else:
+            return None
+
+    @property
     def is_hyperlink(self):
         '''
         checks if the run is nested inside a hyperlink element

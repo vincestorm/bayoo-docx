@@ -6,6 +6,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 
 from docx.document import Document
 from docx.opc.constants import RELATIONSHIP_TYPE as RT
+from docx.parts.endnotes import EndnotesPart
 from docx.parts.hdrftr import FooterPart, HeaderPart
 from docx.parts.numbering import NumberingPart
 from docx.parts.settings import SettingsPart
@@ -186,3 +187,16 @@ class DocumentPart(BaseStoryPart):
             footnotes_part = FootnotesPart.default(self)
             self.relate_to(footnotes_part, RT.FOOTNOTES)
             return  footnotes_part
+
+    @property
+    def _endnotes_part(self):
+        """
+        |EndnotesPart| object related to this package. Creates
+        a default Comments part if one is not present.
+        """
+        try:
+            return self.part_related_by(RT.ENDNOTES)
+        except KeyError:
+            endnotes_part = EndnotesPart.default(self)
+            self.relate_to(endnotes_part, RT.ENDNOTES)
+            return endnotes_part
