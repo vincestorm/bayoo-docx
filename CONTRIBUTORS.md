@@ -10,3 +10,5 @@
 
 * **[baltazarix](https://github.com/baltazarix)**
 
+* **[vincestorm](https://github.com/vincestorm)**
+
