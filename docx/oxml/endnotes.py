@@ -14,7 +14,7 @@ from .xmlchemy import (
 
 class CT_Endnotes(BaseOxmlElement):
     """
-    A ``<w:footnotes>`` element, a container for Footnotes properties
+    A ``<w:endnotes>`` element, a container for Endnotes properties
     """
 
     endnote = ZeroOrMore('w:endnote', successors=('w:endnotes',))
@@ -41,7 +41,7 @@ class CT_Endnotes(BaseOxmlElement):
 
 class CT_Endnote(BaseOxmlElement):
     """
-    A ``<w:footnote>`` element, a container for Footnote properties
+    A ``<w:endnote>`` element, a container for Endnote properties
     """
     _id = RequiredAttribute('w:id', ST_DecimalNumber)
     p = ZeroOrOne('w:p', successors=('w:endnote',))
