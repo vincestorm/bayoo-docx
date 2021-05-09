@@ -38,6 +38,8 @@ Usage
 
     paragraph.add_footnote('footnote text') # add a footnote
 
+    paragraph.add_endnote('endnote text') # add an endnote
+
 
 Donation
 ------------
